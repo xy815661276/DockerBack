@@ -2,6 +2,7 @@ package com.hust.docker.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @time 2017-07-13
  */
 @Configuration
+@EnableWebMvc
 public class CorsConfig extends WebMvcConfigurerAdapter {
     static final String ORIGINS[] = new String[] { "GET", "POST", "PUT", "DELETE" };
     @Override

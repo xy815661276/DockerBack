@@ -4,7 +4,15 @@ public class ResponseJSON {
     private int code;
     private Object body;
     private String message;
+    private int data;
 
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
 
     public int getCode() {
         return code;

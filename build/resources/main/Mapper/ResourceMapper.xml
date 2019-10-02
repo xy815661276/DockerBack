@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.docker.Mapper.ResourceMapper">
+
+    <resultMap id="ResourceMap" type="com.hust.docker.entity.DockerResource">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="intro" column="intro" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="link" column="link" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="type" column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectAll"  resultMap="ResourceMap">
+        select * from resources
+    </select>
+    <select id="selectById" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources where id = #{id}
+    </select>
+    <select id="selectByType" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources where type = #{type}
+    </select>
+</mapper>

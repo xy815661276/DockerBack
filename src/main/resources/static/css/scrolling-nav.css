@@ -3,10 +3,29 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
  */
-header {
+/*header {
   padding: 156px 0 100px;
-}
+}*/
 
 section {
   padding: 150px 0;
+}
+
+header {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+body{
+  font-family: "Lucida Sans Unicode", serif;
+  font-size: 1.25rem;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: Times, sans-serif, Arial, "Noto Sans";
+  font-weight: bold;
+}
+
+a:hover{
+  text-decoration: none;
 }

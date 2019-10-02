@@ -22,8 +22,6 @@ import java.util.Map;
 @RequestMapping("/blog")
 public class BlogControl {
     @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
     private BlogServer blogServer;
     /**
      * 查找所有的BLOG
@@ -49,7 +47,7 @@ public class BlogControl {
      * 按页查找BLOG
      * @return ResponseJSON
      */
-    @GetMapping("/getPage/{index}")
+    @GetMapping("/page/{index}")
     public ResponseJSON getBlogById(@PathVariable(value = "index") int index) throws Exception{
         List<DockerBlog> list = blogServer.getBlog();
         if (list != null && list.size() > 0) {
@@ -63,6 +61,7 @@ public class BlogControl {
                 }
             }
             responseJSON.setBody(page);
+            responseJSON.setData(list.size()/5+1);
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
