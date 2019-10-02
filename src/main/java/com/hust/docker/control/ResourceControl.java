@@ -64,7 +64,7 @@ public class ResourceControl {
                 }
             }
             responseJSON.setBody(page);
-            responseJSON.setData(list.size()/5+1);
+            responseJSON.setData((int)Math.ceil(((double)list.size())/5));
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
@@ -114,7 +114,7 @@ public class ResourceControl {
                 }
             }
             responseJSON.setBody(page);
-            responseJSON.setData(list.size()/5+1);
+            responseJSON.setData((int)Math.ceil(((double)list.size())/5));
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
