@@ -1,7 +1,9 @@
 package com.hust.docker.control;
 
+import com.hust.docker.Service.CategoryServer;
 import com.hust.docker.Service.ProjectServer;
 import com.hust.docker.Service.ResourceServer;
+import com.hust.docker.entity.DockerCategory;
 import com.hust.docker.entity.DockerProject;
 import com.hust.docker.entity.DockerResource;
 import com.hust.docker.entity.ResponseJSON;
@@ -20,6 +22,8 @@ import java.util.List;
 public class ResourceControl {
     @Autowired
     private ResourceServer resourceServer;
+    @Autowired
+    private CategoryServer categoryServer;
     /**
      * 查找所有的BLOG
      * @return ResponseJSON
@@ -61,6 +65,28 @@ public class ResourceControl {
             }
             responseJSON.setBody(page);
             responseJSON.setData(list.size()/5+1);
+            return responseJSON;
+        } else {
+            ResponseJSON responseJSON=new ResponseJSON();
+            responseJSON.setCode(4);
+            responseJSON.setMessage("Failed!");
+            responseJSON.setBody(list);
+            return responseJSON;
+        }
+    }
+
+    /**
+     * 按页查找资源
+     * @return ResponseJSON
+     */
+    @GetMapping("/category")
+    public ResponseJSON getBlogById() throws Exception{
+        List<DockerCategory> list = categoryServer.getCategory();
+        if (list != null && list.size() > 0) {
+            ResponseJSON responseJSON=new ResponseJSON();
+            responseJSON.setCode(3);
+            responseJSON.setMessage("Find Category Success!");
+            responseJSON.setBody(list);
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
