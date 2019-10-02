@@ -9,6 +9,7 @@
         <result property="link" column="link" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="type" column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="author" column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ResourceMap">

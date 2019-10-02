@@ -6,7 +6,16 @@ public class DockerResource {
     private String intro;
     private String img;
     private String link;
+    private String author;
     private int type;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public int getId() {
         return id;
