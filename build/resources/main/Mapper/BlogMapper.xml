@@ -10,6 +10,7 @@
         <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="time" column="time" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="author" column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="contentIndex" column="contentIndex" javaType="java.lang.String" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="BlogMap">

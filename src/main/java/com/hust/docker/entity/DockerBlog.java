@@ -8,6 +8,15 @@ public class DockerBlog {
     private String link;
     private String author;
     private String img;
+    private String contentIndex;
+
+    public String getContentIndex() {
+        return contentIndex;
+    }
+
+    public void setContentIndex(String contentIndex) {
+        this.contentIndex = contentIndex;
+    }
 
     public int getId() {
         return id;

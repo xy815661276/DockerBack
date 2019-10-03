@@ -8,6 +8,7 @@
         <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="link" column="link" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="pdflink" column="pdflink" javaType="java.lang.String" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ProjectMap">

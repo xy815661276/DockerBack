@@ -6,6 +6,15 @@ public class DockerProject {
     private String intro;
     private String img;
     private String link;
+    private String pdflink;
+
+    public String getPdflink() {
+        return pdflink;
+    }
+
+    public void setPdflink(String pdflink) {
+        this.pdflink = pdflink;
+    }
 
     public int getId() {
         return id;
