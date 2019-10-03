@@ -248,6 +248,7 @@ Listing 2.11 replaces ConfigMap
     $ kubectl replace -f ./prom-config-map-v1.yml -n monitoring
 
 Usually we have to remove the Prometheus pod to recreate and load the new configuration. We will see some new targets on the Prometheus expression browser later.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tm4A.png)
 
 We can see that we have 13 targets listed, 9 of which are Node Exporter endpoints on the instance, and 10th and 11th are Prometheus and Alertmanager. Prometheus and Alertmanager targets are automatically discovered because their interfaces are exposed as services.
