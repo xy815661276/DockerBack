@@ -2,20 +2,23 @@
 
 ------------
 
-*Forward from [https://mp.weixin.qq.com/s/zDbv3e2PQ6SYqN7voE1jdQ](https://mp.weixin.qq.com/s/zDbv3e2PQ6SYqN7voE1jdQ)*
+*Forward from [this website](https://mp.weixin.qq.com/s/zDbv3e2PQ6SYqN7voE1jdQ)*
 
 ------------
 
 ![Prometheus](https://cdn.img.wenhairu.com/images/2019/10/03/8tNDG.png "Prometheus")
+
 Prometheus is SoundCloud's open source monitoring system and the second to join CNCF after Kubernetes. Prometheus is an excellent monitoring system. WoQu has developed several components around Prometheus, including basic alarm components, service discovery components, and various collected Exporters. These components, together with Prometheus, support most of WoQu's monitoring business. This article focuses on Prometheus, from his source, architecture, and a concrete example, and what Wows has done around Prometheus.
 
 ###  1. origin
 SoundCloud's previous application architecture was a boulder architecture, where all the features were placed in one large module with no obvious boundaries between functions. There are two main problems in the application of the megalithic architecture. On the one hand, it is difficult to scale horizontally and only expand vertically, but the capability of a single machine is limited after all; on the other hand, the functions are coupled together, adding A feature needs to be developed on an existing technology stack and it is guaranteed that it does not affect existing functionality. So they turned to the microservices architecture, splitting the original functionality into hundreds of independent services, and running thousands of instances across the system. Migrating to the microservices architecture poses certain challenges for monitoring. Now you need to know not only the operation of a component, but also the overall operation of the service. Their monitoring plan at that time was: StatsD + Graphite + Nagios, StatsD combined with Graphite to build monitoring charts, each service pushed the sample data to StatsD, StatsD aggregated the sample data pushed, and regularly pushed to Graphite, and Graphite will sample the data. Stored in the time series database, the user builds a monitoring chart according to the API provided by Graphite, combined with the needs of its own monitoring, and analyzes the indicators of the service through the chart (for example, delay, number of requests per second, number of errors per second, etc.).
 
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tYSv.png)
+
 So can such a solution meet the monitoring requirements of the microservice architecture? What is the requirement: not only can know the overall operation of the service, but also maintain sufficient granularity to know the operation of a certain component. The answer is hard, why? For example, we need to count the number of POST/tracks request errors in the api-server service. The name of the indicator is api-server.tracks.post.500. This indicator can be measured by the http status code. The status code of the service response is 500. wrong. The structure of the Graphite indicator name is a hierarchical structure, the api-server specifies the name of the service, the tracks specifies the handler of the service, the post specifies the method of the request, the 500 specifies the status code of the request response, and the api-server service instance pushes the indicator to StatsD. StatsD aggregates the metrics pushed by each instance and then pushes them to Graphite periodically. Query the api-server.tracks.post.500 indicator, we can get the response number of the service error, but if our api-server service runs multiple instances and wants to know the response number of an instance error, how can we query it? ? The problem is that using such an architecture often aggregates the metrics sent by each service instance into one. After the aggregation, the information of the instance dimension is lost, and the metric information of a specific instance cannot be counted.
 
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tf20.png)
+
 The combination of StatsD and Graphite is used to build the monitoring chart. The alarm is made by another system, Nagios-. This system runs the detection script to determine whether the host or service is running normally. If it is not normal, it sends an alarm. The biggest problem with Nagios is that the alarm is host-oriented. The check items of each alarm are all around the host. In the environment of the distributed system, the host is down. This is a normal scenario. The design of the service itself can tolerate the node down. However, Nagios will still trigger an alarm in this scenario.
 
 If you have seen this article(https://landing.google.com/sre/sre-book/chapters/practical-alerting/#id-WakuESGIBIysp-marker) on Google Borgmon, compare Prometheus and you will find these two The system is very similar. In fact, Prometheus was heavily influenced by the Borgmon system, and employees who were involved in building the Google monitoring system joined SoundCloud. In short, the combination of various factors prompted the birth of the Prometheus system.
@@ -39,6 +42,7 @@ Let's take a brief look at the architecture of Prometheus, look at the capabilit
 Prometheus Server is the core of the whole system. It periodically pulls the indicators from the API exposed by the exporters and saves the data to the time series database. If the monitoring target is dynamic, it can be dynamically driven by the mechanism of service discovery. These monitoring targets are added, and it also exposes APIs that execute PromQL, the language used to manipulate time-series data. Other components, such as Prometheus Web, can be used by Grafana to query the corresponding time series data. The Prometheus Server periodically executes the alarm rule. The alarm rule is a PromQL expression. The value of the expression is true or false. If true, the generated alarm data is sent to the alertmanger. The aggregation, grouping, sending, disabling, and restoring of alarm notifications is not done by Prometheus Server, but by Alertmanager. Prometheus Server simply pushes the triggered alarm data to Alertmanager, and then Alertmanger aggregates the alarms according to the configuration. One piece, sent to the corresponding recipient.
 
 If we want to monitor a scheduled task, want the execution time of the instrument task, and the task execution succeeds or fails, how do you expose these metrics to Prometheus Server? For example, every other day to do a database backup, we want to know how long each backup is executed, whether the backup is successful, our backup task will only be executed for a while, if the backup task is over, how should Prometheus Server pull the backup indicator? What about the data? To solve this problem, you can do this through Prometheus' pushgateway component. Each backup task pushes the metrics to the pushgateway component. Pushgateway caches the pushed metrics. Prometheus Server pulls the metrics from the Pushgateway.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tAGn.png)
 
 ### 4. Examples
@@ -166,6 +170,7 @@ After collecting the indicators, you can use the PromQL language provided by Pro
 With the time series data, you can use Grafana to build the monitoring chart. How to configure the Grafana chart is not extended here. The core point is to use PromQL expression to select and calculate the time series data.
 
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tqLT.png)
+
 The Prometheus alarm is implemented by evaluating the Alerting Rule, which is a series of PromQL expressions, and the aerting rule is stored in the configuration file. We want to alert the application's delay and available status. When the application is too high or inaccessible, the alarm is triggered. The rules can be defined as follows:
 
 ### 5. Relation work

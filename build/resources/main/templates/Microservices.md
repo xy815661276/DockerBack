@@ -2,7 +2,7 @@
 
 ------------
 
-*Forward from [https://microservices-on-my-mind.blogspot.com/2018/08/microservices-and-testing-lessons.html?mkt_tok=eyJpIjoiWVRBMVl6VmtaV0pqTW1JNCIsInQiOiI1QTlGblpBaU0vMWQ5ODNVVUJwVjloM21IMy9GNFFIUFEzZ1lVQnA4UWEvQmt6dHBFZUIwYXZIRTFjem94c1ErWTU2U2g3U3lvZENHRllIN2JBak9aS3YzMDNyeHBBc2pSck5xSERwOGE5K2VDcTZScDgvL01zbjBYN1RMSFFOcyJ9)*
+*Forward from [this website](https://microservices-on-my-mind.blogspot.com/2018/08/microservices-and-testing-lessons.html?mkt_tok=eyJpIjoiWVRBMVl6VmtaV0pqTW1JNCIsInQiOiI1QTlGblpBaU0vMWQ5ODNVVUJwVjloM21IMy9GNFFIUFEzZ1lVQnA4UWEvQmt6dHBFZUIwYXZIRTFjem94c1ErWTU2U2g3U3lvZENHRllIN2JBak9aS3YzMDNyeHBBc2pSck5xSERwOGE5K2VDcTZScDgvL01zbjBYN1RMSFFOcyJ9)*
 
 ------------
 
@@ -28,11 +28,13 @@ What are the challenges? When we write any test, we are essentially doing AAA wh
 Now let’s see some new techniques in terms of Arrange/Mocking that are becoming more popular these days. For any microservice, there are only two things we care about -1) Its immediate consumers (which are the incoming requests) and 2) its immediate dependencies. We don’t have to worry about the entire dependency graph but only its immediate dependencies! To accomplish this, teams are getting into practice of creating consistent snapshots. There are many ways to do it e.g tools like crawler (which can crawl to immediate dependencies and download data in JSON format - more suitable for get style operations) or recorder (which can record an API call and replay it when needed - more suitable for post/put) are becoming more popular. These snapshots are then checked-in into the source control with the service. So, when you download the service code, you are not only getting the code but also a snapshot of all its dependencies that was taken at some point in time. These snapshots are then further used for mocking. The key here is to be able to take consistent snapshots meaning- let’s say a service has a dependency on an API and it consumes two fields. If tomorrow it exposes one more field which the service needs to consume, then it will take a new snapshot and this new snapshot ideally should not override the values of two earlier fields. Otherwise assertions would start to fail!
 
 In a more abstract term, what we are doing is essentially creating a well-known dataset in terms of snapshots of the immediate dependencies. Your team should have full control over it and no one else should touch it. These datasets are usually small in nature due to the fact that we only care about the immediate dependence and not the entire environment! Once we have these snapshots/datasets, then it becomes very easy to create a Component-Test suite which looks something like this: 
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tR1u.png)
 
 The service under test is the middle container and comes with its own data container as a part of the same stack. The only difference b/w service running in production versus in test mode is that in test mode - it is talking to a mock container instead of a real environment. The mock container serves the snapshots we downloaded in the earlier step as mock. And finally, there is a test-client container which is responsible for calling the service API with different sets of parameters and can further validates the response produced by the service.
 
 Here is a screenshot of the test-run result of an upcoming microservice stack I am currently working on. I am a big fan of BDD and the test-client container is written in cucumber-js framework. From the screenshot, it ran 195 test cases (with 962 steps) in about 19 seconds. It spits out this nice code coverage report when all the tests are passed! Yes, it’s possible to get code coverage from a running service - just needs bit of different configuration/hack depending on the language. 
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tk4h.png)
 
 So now let’s compare this Component-Test setup with the Unit Tests:
@@ -44,6 +46,7 @@ So now let’s compare this Component-Test setup with the Unit Tests:
 So finally, the variation in the testing pyramid looks something like this:
 
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tohP.png)
+
 In a way, it’s really these powerful set of tools and techniques coming together to create Component-Test suite which has sort of the same good characteristics as that of the Unit tests. In terms of adoption, It has been practically exponential within our organization. 
 
 #### Lessons Learned

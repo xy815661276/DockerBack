@@ -2,7 +2,7 @@
 
 ------------
 
-*Forward from [https://engineering.docker.com/2019/04/multi-arch-images/)*
+*Forward from [this website](https://engineering.docker.com/2019/04/multi-arch-images/)*
 
 ------------
 
@@ -130,6 +130,7 @@ First, you need a new instance to work with, when you create that you get a cons
 At the top, you can see the IP address of the instance.
 
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tU4o.png)
+
 First, we need to initialize our swarm
 
 *docker swarm init –advertise-addr=(ipaddress of the instance)*
@@ -188,9 +189,11 @@ Copy the data into the console. End with Ctrl + C. Next step is to start the ser
 	docker stack deploy --compose-file docker-compose.yml test
 
 Now you should see output like this, showing that the services are started.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tahf.png)
 
 You should be able to access the website by clicking the port number link at the top of the interface. Sometimes they do not show up, but you can create the URL manually. You need the part marked with yellow below. It is added into the URL below. When you get it right, it should show the “Welcome to Nginx!” message from the website.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8t9Dd.png)
 
 *http://<yellow part>-8080.direct.labs.play-with-docker.com/*
@@ -203,6 +206,7 @@ But if you run the following command, you will see that the fluentd container ke
 *docker ps*
 
 It happens because it can not find the database in InfluxDB because we have not created it yet, as seen by viewing the logs from the container.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tGcH.png)
 
 We create the database by running this command
@@ -214,11 +218,13 @@ Now you should see that the fluentd container keeps running. And now data is bei
 The final step is to log in to Grafana and configures it to display the data. You use the same URL that you created to access the website, just exchange the 8080 with 3000. That is the port number we are replacing.
 
 It should give you the login page for Grafana
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8t13q.png)
 
 Login using admin/admin, it will ask you for a new password.
 
 The first thing we need to do is to add a data source, so Grafana knows where our data is located. We enter http://influxdb:8086 as the URL and “webserver” as the database name as shown below.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8t5fX.png)
 
 Grafana should respond that the data source works.
@@ -226,9 +232,11 @@ Grafana should respond that the data source works.
 Now we can create a graph of the stored data. On the left side of Grafana is a plus where we can add a dashboard and on the dashboard we can add a graph.
 
 It should create an empty graph which we can edit on the top arrow.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/04/8tImN.png)
 
 Edit the query to match the settings here
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/03/8tnQp.png)
 
 Now you will have a live updating graph counting the number of requests the Nginx container is processing. You can use this as a template to add more graphs.

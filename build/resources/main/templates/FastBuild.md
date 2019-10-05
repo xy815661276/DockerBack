@@ -7,7 +7,7 @@
 
 ------------
 
-![FastBuild](https://cdn.img.wenhairu.com/images/2019/10/02/8r7sU.png "FastBuild")
+<img class="img-fluid rounded" src="https://cdn.img.wenhairu.com/images/2019/10/02/8r7sU.png"/>
 
 ------------
 

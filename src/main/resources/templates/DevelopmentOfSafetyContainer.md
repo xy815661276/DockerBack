@@ -1,3 +1,11 @@
+## Development and thinking of safety container
+
+------------
+
+*Forward from [this website](https://mp.weixin.qq.com/s/n3V3McIW-dH3u8szv0jH2A)*
+
+------------
+
 <center><strong>Current status of container technology applications and security issues</strong></center>
 
 As is known to all, containerization, microservitization and cloud biochemistry are the trends of current IT system evolution. According to the Portworks and Aqua Security survey, most of the businesses surveyed are either using or considering containers.
@@ -16,7 +24,7 @@ When it comes to the security of the container, we can come back to the containe
 
 However, the problem with it is that it is still a part of the Linux Kernel, and existing Linux isolation problems cannot be eliminated and may even be amplified by new features. <u>Therefore, when Linus was interviewed on Keynote at LinuxCon in Seattle in 2015, he directly said that there was no way to solve the Bug and there must be an isolation layer for security.</u> (The origin: *The only real **solution to security** is to admit that bugs happen, and then mitigate them by having multiple layers*)
 
-![](https://mmbiz.qpic.cn/mmbiz_png/yvBJb5Iiafvm0c5jNDu01p0sGuMTaTibfPPphMdu80jibgtFmhjI1BibV8cV0VcMVZXMMS1jlU57xRpqFP3pRsteJw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8tvrH.png)
 
 The isolation layer, which lets the application container run on top of its own kernel and not share with other containers. The simplest solution is to run the container in the virtual machine (left 1), which does not require any changes to the software stack, but allows the same user's container to run in its own virtual machine. The problem with this approach is that, in addition to the additional overhead, there are two layers of maintenance complexity.
 
@@ -33,7 +41,7 @@ Technically, in the Kubernetes ecosystem, Kata Containers can dock with CRI daem
 
 Shim will pass the vsock MicroVM inside control agent to manage the inside of the Pod OCI container, here, the community version of the Kata support the VMM includes Qemu and AWS open-source FireCracker, the former more feature-rich, better compatibility, the latter is more light, according to our alibaba's ", and should be, and in "spirit, which one you don't need to give up, use Kubernetes RuntimeClass, You can specify the VMM to be used for each Pod. For details on the How to class, you can check out our documentation on GitHub or discuss it on the Slack channel. Don't forget to open an issue if you have a problem. This is a great support to the community.
 
-![](https://mmbiz.qpic.cn/mmbiz_png/yvBJb5Iiafvm0c5jNDu01p0sGuMTaTibfPOuZzD0ib8aePmalSY5nA2Do6UHEOLpXT5nl8LXsYl3kY024OBahuEibg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8z6Cq.png)
 
 Similar Container scheme based on MicroVM techniques are actually there are many, the Hyper - V Container and familiar with Microsoft recently integrated WSL2 in Windows, says from the number, that is the mainstream of the current the most important reason is that for the average Docker Image of the perfect compatibility, and this scheme in the open source solution, of course, is with the Kata for us. Of course, there are many bright spots in the process-based virtualization scheme, among which the biggest bright spot is of course Google's open source gVisor, because the technology Leader of Google's project when it was open source is now my boss, ZhengYu He.
 
@@ -85,7 +93,8 @@ As we all know, alibaba has both businesses oriented towards personal consumptio
 
 + The third scenario is a mixed deployment of multiple services. In order to improve the utilization rate of resources, one of the main ideas is to mix online business and offline business on the same server and use the remaining resources of online service to serve offline tasks. This is a challenging task, and the traditional approach is to ensure the online service experience by reserving enough resources for the online task. Then, how to ensure the online task service experience under the mixed ministry? The idea is also simple: give priority to your online business. However, this is not enough. Due to the Shared kernel, memory allocation and IO scheduling, offline tasks often interfere with online tasks. Therefore, offline tasks are put into an independent safe sandbox to realize resource isolation, fault isolation and environment isolation.
 
-![](https://mmbiz.qpic.cn/mmbiz_png/yvBJb5Iiafvm0c5jNDu01p0sGuMTaTibfP6sKZbq0EvGuXO4WYsGRjI8CYNEapmgEkqlnEM8oQqNHGXicibP7BicmWQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8z8RX.png)
+
 
 Based on the above business requirements, we developed aliyun safe sandbox technology, based on the mature and stable infrastructure of aliyun and MicroVM technology route, to build safe, reliable, lightweight and ecologically compatible container runtime for business.
 
@@ -108,5 +117,5 @@ Ant financial and aliyun have been active contributors to security containers in
 
 We will open and community to make joint Kata Containers 2.0 roadmap, we in the container and the best practices in the field of cloud service feedback to the community, to general technical contribution to the Kata Contaienrs and Rust - the VMM community, guarantee the consistency of alibaba CloudSandbox and community, for the majority of users with the industry to create a safe, reliable, efficient and compatible with the ecological container runtime.
 
-![](https://mmbiz.qpic.cn/mmbiz_png/yvBJb5Iiafvm0c5jNDu01p0sGuMTaTibfPTcrx2OuwiaKfatRRQHzK7I7zgLQ3rS716ias8qT3QMkRhAmjh70ps0MQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8zAbp.png)
 

@@ -2,19 +2,21 @@
 
 ------------
 
-*Forward from [https://engineering.docker.com/2019/04/multi-arch-images/)*
+*Forward from [this website](https://engineering.docker.com/2019/04/multi-arch-images/)*
 
 ------------
 
 On Wednesday April 24th, Docker announced a partnership with Arm to help accelerate adoption of containers into the massive Arm ecosystem. Today at DockerCon San Francisco 2019, Docker is releasing a tech preview of improved multi-architecture builds within Docker Desktop.
 
 Docker Desktop is the de facto standard when it comes to developing containerized applications. This tech preview will open the rich Arm ecosystem to the millions of developers already using and developing in Docker Desktop. Not only will this simplify the development of container images for deployment on Amazon EC2 A1 Arm-based instances in the cloud, but it will help pave the way forward to the one trillion Arm based Edge & IoT devices around the world! Let’s dig into why we are doing this, how it all works, and how you can get started.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/04/8t0BR.png)
 
 ### 1. Why is Docker doing this?
 In November 2018 Amazon announced EC2 A1 instances powered by AWS Graviton Processors that feature 64-bit Arm Neoverse cores and custom silicon designed by AWS. A1 EC2 instances are cost and performance optimized for scale-out workloads and offer up to 45% cost savings relative to other EC2 instances. With this Docker Desktop tech preview, Docker is making it easier than ever to develop containers on, and for Arm servers and devices. Using the standard Docker tooling and processes you are already familiar with you can start to build, push, pull, and run images seamlessly on different compute architectures. No changes to Dockerfiles or source code are needed to start building for Arm. Simply rebuild your image using the new features being released today. Finally, Docker is quickly expanding into Edge and IoT, and we see this as an important step in that process. Docker has always been about developers, and making things easy. That is at the heart of why we did this.
 
 ### 2. How does it work?
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/04/8tSED.png)
 
 Docker Desktop is available for macOS and Windows. It bundles and configures many things for users that make developing containers extremely easy. Docker Desktop ships with hypervisors for the host OS. The hypervisor is responsible for running a lightweight Linux kernel (LinuxKit), which is included as part of Docker Desktop. This fast and lightweight container OS comes packaged with the QEMU emulator, and comes pre-configured with binfmt_misc to run binaries of any supported architecture. Arm is committed to supporting Docker’s QEMU fork and will be helping to maintain this project. All patches will be upstreamed, but Docker Desktop will contain the latest emulation support. In the diagram above you can see QEMU emulation for the arm/v6, arm/v7 and arm64 Docker images.
@@ -25,9 +27,11 @@ So why buildx? Let’s first start with the name. The x stands for experimental.
 
 ### 3. Getting started！
 If you don’t already have Docker Desktop, start by downloading it. Install it by following the installation instructions. Once installed, or if you already have Docker Desktop, you should see the Docker icon in your task tray, click preferences, and simply switch to the edge release.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/04/8tcct.png)
 
 Verify you have version 2.0.4.0 (33772)+ by opening the “About Docker Desktop”in the drop down.
+
 ![](https://cdn.img.wenhairu.com/images/2019/10/04/8tg3S.png)
 
 ### 4. Examples！

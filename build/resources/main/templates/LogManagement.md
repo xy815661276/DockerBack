@@ -1,6 +1,14 @@
+## Log management for cloud native observability
+
+------------
+
+*Forward from [this website](https://mp.weixin.qq.com/s/E7bFp58OL6gjvBxLTKpbJQ)*
+
+------------
+
 In recent years, with the rise of cloud native technology represented by Kubernetes, Observability, as a new concept, has gradually come into people's view. Cloud native foundation (CNCF) has classified observability in its Landscape as a separate category, mainly including monitoring, logging and tracking in a narrow sense, and warning, event and audit in a broad sense. Numerous new open source software has emerged in this field, such as Prometheus, Grafana, Fluentd, Loki, Jaeger, etc.
 
-![https://landscape.cncf.io/](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyDAVez4O9Du69pvGozKAC0GETCon5EDATypalojrq8JdVDbSsS3PHhA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![https://landscape.cncf.io/](https://cdn.img.wenhairu.com/images/2019/10/04/8tO1B.png)
 
 As an important part of observability, log plays a very important role in development, operation, testing, auditing and so on. One of the famous 12 elements of application development states: "logging makes the actions of the application run transparent, and the application itself never considers storing its own output stream. You should not attempt to write or manage log files. Each running process outputs directly to standard output (stdout). The output stream of each process is captured by the runtime environment, collated with other output streams, and sent to one or more final processors for viewing or long-term archiving.
 
@@ -8,16 +16,16 @@ In the environment of a physical machine or virtual machine, the log is usually 
 
 The general log architecture given by the official website of Kubernetes is shown in the following figure, including log Agent, back-end service and front-end console. Both mature logging solutions like ELK/EFK and cloud native 2018 open source Loki share a similar architecture, with contributions from ELK/EFK, Loki and KubeSphere described below.
 
-![https://kubernetes.io/docs/concepts/cluster-administration/logging/](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyjiboAqoFl3KhPwicOdtVbhRzSdiajCOcQrNknSrSI33s2UdUvX0KODfaA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![https://kubernetes.io/docs/concepts/cluster-administration/logging/](https://cdn.img.wenhairu.com/images/2019/10/04/8tTIn.png)
 
 <center><strong>Marriage of old and new: ELK to EFK, Fluentd to Fluent Bit</strong></center><hr size="2px" />
 ELK, short for Elasticsearch, Logstash and Kibana, is a mainstream open source logging solution. Fluentd, which graduated from CNCF in April 2019 and is written by C and Ruby, is a general log collector. With its high efficiency, flexibility and ease of use, Fluentd has gradually replaced Logstash written by Java as an important member of the new log solution EFK and has been widely recognized and applied in the cloud native field. Google's cloud logging service Stackdriver also USES the modified Fluentd as the Agent. However, the Fluentd development team did not stop there and launched a more lightweight product Fluent Bit written entirely in C, as shown in the figure below:
 
-![https://docs.fluentbit.io/manual/about/fluentd_and_fluentbit](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyCfDIWBsrpc42KyxMNgvWKp5P8lxJ8UsFt2J2ZI2ia39zRS6ibJkFke8g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![https://docs.fluentbit.io/manual/about/fluentd_and_fluentbit](https://cdn.img.wenhairu.com/images/2019/10/04/8tVlA.png)
 
 As you can see, Fluent Bit takes up less resources than Fluentd and is more suitable as a logging collector. Fluentd plug-in is very many, more suitable as a log aggregator.
 
-![](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSykxwqicN3H7rCgG7wPQ12CdtVl0aJwicPrc5pDXGXxQ3Fac365Yu5kpaw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8zaqR.png)
 
 <center><strong>FluentBit Operator and its applications in KubeSphere</strong></center><hr size="2px"/>
 Fluent Bit is lighter and more efficient, but it also has a problem: configuration file changes don't automatically reload new configurations gracefully. See the official Github issue for details:
@@ -33,17 +41,17 @@ To address these issues, the KubeSphere team developed FluentBit Operator and ap
 
 3. The FluentBit Controller then restarts the FluentBit master process to load the new configuration file.
 
-![the architecture diagram of FluentBit Operator](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSy1Ivd6NWJgiauwxMBQKuL4cwIjCEpnrSs8Dex8WzeNS83gLVTTFaWbCQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![the architecture diagram of FluentBit Operator](https://cdn.img.wenhairu.com/images/2019/10/04/8tBgG.png)
 
 From KubeSphere, select Elasticsearch as the log backend service and FluentBit as the log collector. The KubeSphere log console controls the FluentBit configuration in FluentBit CRD through the FluentBit Operator. (users can also change fluentbit configuration in a kubernetes native way by kubectl edit fluentbit fluentbit fluentbit)
 
-![the architecture diagram of KubeSphere log system](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSy1XicfCYmZbCqcnCwW4mE9XqmQ4lNCtw9Rz6aFWIEo6Y5fApSu11gd9Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![the architecture diagram of KubeSphere log system](https://cdn.img.wenhairu.com/images/2019/10/04/8tb3v.png)
 
 With FluentBit Operator, KubeSphere has the flexibility to add/remove/suspend/configure log receivers via the console.
 
-![the configuration interface of KubeSphere log](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSygjI76xgEkC1WZvYB7GEpGe8EzJe7PnZjZAeOdA58jQia7qBjQVicgpibg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![the configuration interface of KubeSphere log](https://cdn.img.wenhairu.com/images/2019/10/04/8tiw0.png)
 
-![the search interface of KubeSphere log](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyicJbdpjIarIUiaPXzPiaw0UM8CibtKG5BqxMicialaIGUxUBibXU2QSNzE0Dg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![the search interface of KubeSphere log](https://cdn.img.wenhairu.com/images/2019/10/04/8tsRU.png)
 
 <center><strong>Multi-tenant log management</strong></center><hr size="2px"/>
 
@@ -51,14 +59,15 @@ Multi-tenant features are currently a concern in the Kubernetes community, and t
 
 Can see three layers of KubeSphere is based on the RBAC multi-tenant architecture, Cluster/Workspace/Project three levels have different levels of Roles and the matching.
 
-![](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSy0OaLhUJBf1Trq18ibRtr5MY4sficGrmZb3eyl3NiaBWSTvp3VqbnrmcNg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8t2Bj.png)
 
 Prior to access to log data (or other services), authentication and authorization by API Gateway are required:
-![](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyQhVRPXMafbQJuqUjFPcTJkHicU4jhjjqfuUTicspp38KuGGgndbLIg7A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8trmg.png)
 
 KubeSphere's complete logging solution is as follows:
 
-![](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyHCtXGzPokVrZiczsDs5eHTen2agYpR7hmA8AsM8qJCewNcP4hJvKuEQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8ttpK.png)
 
 <center><strong>Cloud's Native biological son Loki：Like Prometheus, but for logs</strong></center><hr size="2px"/>
 
@@ -68,11 +77,11 @@ Cloud native has been waiting for a log management software developed by Go, Lok
 
 The most important features of Loki are its low storage cost and low resource footprint. Loki do this is at the beginning of the design is intended to solve Elasticsearch occupancy resources more shortcomings, through to metadata indexes such as Label, only to compress log stream data storage, and in the user search to narrow down the view by index of Label when the log text, real-time decompression and mechanism of log like grep stream data filtering. As shown in the figure below, Loki's components include Agent Promtail that collects the data, Distributor that receives the data, Ingester that caches the data for bulk writes, and Querier for querying the data, all of which can scale and be highly available depending on the load level.
 
-![Loki architecture (from Grafana Labs official blog)](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyIYINiakuibfmmr2rxU8OUNaibictNYzv1fm6H8HiazOabBiavqedgnzEaWSg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![Loki architecture (from Grafana Labs official blog)](https://cdn.img.wenhairu.com/images/2019/10/04/8tzI3.png)
 
 As shown in the following figure, the index and log data blocks of Loki are respectively stored with different storage media, and the index can be stored to Cassandra, BoltDB, etc. Log data blocks can be stored on local disk or in cloud object storage or S3 compliant Minio. So in the realization of mass log data storage at low cost, but also to meet the needs of users quickly query log.
 
-![Loki storage (from Grafana Labs official blog)](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyZtxvCpXTODEBfiblIFIbx9x5OuACia2BgKbLA4d6oImV5vNbQBu3giabA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![Loki storage (from Grafana Labs official blog)](https://cdn.img.wenhairu.com/images/2019/10/04/8tjlo.png)
 
 As a log solution emerging in the era of cloud natives, Loki has rapidly gained great attention due to its low cost, scalability and high availability, as well as its close integration with Kubernetes and Prometheus. It is expected to gain the status of Prometheus on Kubernetes and become the DE facto standard for log management in the cloud natives.
 
@@ -91,7 +100,7 @@ A: we are investigating Loki. Grafana Labs already offers Loki as A logging serv
 **Q: excuse me, the user wants to customize log parsing, how to achieve? At present, our implementation mode is that fluentd parser is deployed to every node of Kubernetes as an Agent in the manner of DeamonSet, and it is collected and parsed at the same time. The disadvantage is that it occupies too much node resources. How do you implement it?**
 A: the Agent collecting logs should be more lightweight, such as Fluent Bit. Fluentd can be taken as the receiver of Fluent Bit, and then sent to the final storage after the centralized analysis with Fluentd, so that Fluentd need not be deployed on every node. An architecture like this:
 
-![](https://mmbiz.qpic.cn/mmbiz_png/A1HKVXsfHNn8bo8cOrUBe2iaT6uTKxRSyDiax6dydgqnCMLxLBWs5ZuicGHicm5qUhqr4vX3S1zMKYPicQU0a6SQdHg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://cdn.img.wenhairu.com/images/2019/10/04/8thUf.png)
 
 **Q: have Fluent and Filebeat done any pressure tests? Or because Fluentd is CNCF project just choose this? Ruby also has GIL locks, which can only squeeze single-core performance.**
 A: I chose Fluent Bit mainly because of its small memory footprint. Filebeat is also very popular. Go writes that it USES a Bit more memory than Fluent Bit, as far as I know. Fluent Bit is written entirely in C, not Ruby. Fluentd core with c, plug-in with Ruby.
