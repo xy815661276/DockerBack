@@ -15,8 +15,8 @@ public class FileControl {
     @ResponseBody
     @RequestMapping(value = "/getArticle/{filename}")
     public void downloadFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws IOException {
-        InputStream f= this.getClass().getResourceAsStream("/templates/"+filename+".md");
-
+//        InputStream f= this.getClass().getResourceAsStream("/templates/"+filename+".md");
+        InputStream f= new  FileInputStream("/root/resources/markdown/"+filename+".md");
         response.reset();
         response.setContentType("application/x-msdownload;charset=utf-8");
         try {
