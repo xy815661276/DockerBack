@@ -7,6 +7,15 @@ public class DockerProject {
     private String img;
     private String link;
     private String pdflink;
+    private int views;
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
 
     public String getPdflink() {
         return pdflink;

@@ -10,6 +10,7 @@
         <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="type" column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         <result property="author" column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ResourceMap">
@@ -21,4 +22,7 @@
     <select id="selectByType" resultType="com.hust.docker.entity.DockerResource">
         select * from resources where type = #{type}
     </select>
+    <update id="addViews">
+        update resources set views = ((select views from resources where id = #{id})+1) where id = #{id}
+    </update>
 </mapper>

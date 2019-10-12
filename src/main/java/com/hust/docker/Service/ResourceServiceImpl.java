@@ -27,4 +27,8 @@ public class ResourceServiceImpl implements ResourceServer{
     public List<DockerResource> getResourceByType(int type) throws Exception {
         return resourceMapper.selectByType(type);
     }
+    @Override
+    public void addViews(int id) throws Exception {
+        resourceMapper.addViews(id);
+    }
 }

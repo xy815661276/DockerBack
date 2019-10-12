@@ -8,6 +8,34 @@ public class DockerResource {
     private String link;
     private String author;
     private int type;
+    private int views;
+
+    private int citednum;
+    private int time;
+
+    public int getCitednum() {
+        return citednum;
+    }
+
+    public void setCitednum(int citednum) {
+        this.citednum = citednum;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
 
     public String getAuthor() {
         return author;

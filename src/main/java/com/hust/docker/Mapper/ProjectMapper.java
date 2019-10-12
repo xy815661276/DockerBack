@@ -21,4 +21,8 @@ public interface ProjectMapper {
          * @return
          */
         List<DockerProject> selectAll();
+        /**
+         * 浏览量加一
+         */
+        void addViews(int id);
 }

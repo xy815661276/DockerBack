@@ -23,4 +23,9 @@ public class ProjectServiceImpl implements ProjectServer{
     public DockerProject getProjectById(int id) throws Exception {
         return projectMapper.selectById(id);
     }
+
+    @Override
+    public void addViews(int id) throws Exception {
+        projectMapper.addViews(id);
+    }
 }

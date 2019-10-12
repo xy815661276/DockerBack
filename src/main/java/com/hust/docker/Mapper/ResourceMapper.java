@@ -26,4 +26,8 @@ public interface ResourceMapper {
          * @return
          */
         List<DockerResource> selectByType(int id);
+        /**
+         * 浏览量加一
+         */
+        void addViews(int id);
 }
