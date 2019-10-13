@@ -33,4 +33,14 @@ public class ProjectServiceImpl implements ProjectServer{
     public List<DockerProject> getCnProject() throws Exception {
         return projectMapper.selectCnAll();
     }
+
+    @Override
+    public List<DockerProject> searchCn(String index) throws Exception {
+        return projectMapper.searchCn(index);
+    }
+
+    @Override
+    public List<DockerProject> search(String index) throws Exception {
+        return projectMapper.search(index);
+    }
 }

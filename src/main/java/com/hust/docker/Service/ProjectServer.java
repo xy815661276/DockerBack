@@ -14,4 +14,6 @@ public interface ProjectServer {
     public void addViews(int id) throws Exception;
     //获取所有中文项目
     public List<DockerProject> getCnProject() throws Exception;
+    public List<DockerProject> search(String index) throws Exception;
+    public List<DockerProject> searchCn(String index) throws Exception;
 }

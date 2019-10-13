@@ -50,4 +50,14 @@ public interface ResourceMapper {
          * @return
          */
         List<DockerResource> selectCnByTime(int time);
+        /**
+         * 模糊搜索
+         * @return
+         */
+        List<DockerResource> search(String index);
+        /**
+         * 模糊搜索
+         * @return
+         */
+        List<DockerResource> searchCn(String index);
 }

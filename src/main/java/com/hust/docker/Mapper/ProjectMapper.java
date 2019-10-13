@@ -29,4 +29,14 @@ public interface ProjectMapper {
          * 浏览量加一
          */
         void addViews(int id);
+        /**
+         * 模糊搜索
+         * @return
+         */
+        List<DockerProject> search(String index);
+        /**
+         * 模糊搜索
+         * @return
+         */
+        List<DockerProject> searchCn(String index);
 }

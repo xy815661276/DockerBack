@@ -51,4 +51,14 @@ public class ResourceServiceImpl implements ResourceServer{
     public List<DockerResource> getResourceByTime(int time) throws Exception {
         return resourceMapper.selectByTime(time);
     }
+
+    @Override
+    public List<DockerResource> search(String index) throws Exception {
+        return resourceMapper.search(index);
+    }
+
+    @Override
+    public List<DockerResource> searchCn(String index) throws Exception {
+        return resourceMapper.searchCn(index);
+    }
 }

@@ -15,4 +15,7 @@ public interface ResourceServer {
     public List<DockerResource> getCnResource() throws Exception;
     public List<DockerResource> getCnResourceByType(int type) throws Exception;
     public List<DockerResource> getCnResourceByTime(int time) throws Exception;
+    public List<DockerResource> search(String index) throws Exception;
+    public List<DockerResource> searchCn(String index) throws Exception;
+
 }

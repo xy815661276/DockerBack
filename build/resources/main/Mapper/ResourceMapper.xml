@@ -35,10 +35,16 @@
         select * from resources where type = #{type} order by citednum desc
     </select>
     <select id="selectByTime" resultType="com.hust.docker.entity.DockerResource">
-        select * from resources where time = #{time} order by citednum desc 
+        select * from resources where time = #{time} order by citednum desc
     </select>
     <update id="addViews">
         update resources set views = views+1 where id = #{id};
         update resources_cn set views = views+1 where id = #{id};
     </update>
+    <select id="search" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources where title like "%"#{index}"%" or intro like "%"#{index}"%"
+    </select>
+    <select id="searchCn" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources_cn where title like "%"#{index}"%" or intro like "%"#{index}"%"
+    </select>
 </mapper>

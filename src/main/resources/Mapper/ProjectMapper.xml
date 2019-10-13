@@ -25,4 +25,10 @@
         update projects set views = views+1 where id = #{id};
         update projects_cn set views = views+1 where id = #{id};
     </update>
+    <select id="search" resultType="com.hust.docker.entity.DockerProject">
+        select * from projects where title like "%"#{index}"%" or intro like "%"#{index}"%"
+    </select>
+    <select id="searchCn" resultType="com.hust.docker.entity.DockerProject">
+        select * from projects_cn where title like "%"#{index}"%" or intro like "%"#{index}"%"
+    </select>
 </mapper>

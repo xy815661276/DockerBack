@@ -56,8 +56,10 @@ public class ResourceControl {
         List<DockerResource> list;
         if(type<100)
             list = resourceServer.getResourceByType(type);
-        else
-            list = resourceServer.getResourceByTime(type);
+        else{
+            DockerCategory dockerCategory = categoryServer.getCategoryById(type);
+            list = resourceServer.getResourceByTime(Integer.parseInt(dockerCategory.getName()));
+        }
 
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
