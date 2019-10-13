@@ -28,19 +28,8 @@ public class SearchControl {
         searchResponse.setMessage("Search Success!");
         searchResponse.setResources(list);
         searchResponse.setProjects(list1);
+        if(list.size()==0&&list1.size()==0)
+            searchResponse.setCode(-1);
         return searchResponse;
-
-    }
-    @PostMapping("/searchp")
-    public SearchResponse searchp(@RequestParam("index") String index)throws Exception{
-        List<DockerResource> list =  resourceServer.search(index);
-        List<DockerProject> list1 =  projectServer.search(index);
-        SearchResponse searchResponse = new SearchResponse();
-        searchResponse.setCode(1);
-        searchResponse.setMessage("Search Success!");
-        searchResponse.setResources(list);
-        searchResponse.setProjects(list1);
-        return searchResponse;
-
     }
 }
