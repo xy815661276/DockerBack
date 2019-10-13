@@ -17,10 +17,14 @@ public interface ProjectMapper {
         DockerProject selectById(int id);
 
         /**
-         * 查询所有博客信息
+         * 查询所有项目信息
          * @return
          */
-        List<DockerProject> selectAll();
+        List<DockerProject> selectAll();/**
+         * 查询中文所有项目信息
+         * @return
+         */
+        List<DockerProject> selectCnAll();
         /**
          * 浏览量加一
          */

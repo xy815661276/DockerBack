@@ -9,16 +9,20 @@
         <result property="link" column="link" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="img" column="img" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="pdflink" column="pdflink" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ProjectMap">
         select * from projects
     </select>
+    <select id="selectCnAll"  resultMap="ProjectMap">
+        select * from projects_cn
+    </select>
     <select id="selectById" resultType="com.hust.docker.entity.DockerProject">
         select * from projects where id = #{id}
     </select>
-<!--        <insert id="save" parameterType="DockerProject">-->
-<!--   insert into blog(id,intro,title,link,img,time,author)-->
-<!--    values(#{id},#{intro},#{title},#{link},#{img},#{time},#{author})-->
-<!--    </insert>-->
+    <update id="addViews">
+        update projects set views = views+1 where id = #{id};
+        update projects_cn set views = views+1 where id = #{id};
+    </update>
 </mapper>

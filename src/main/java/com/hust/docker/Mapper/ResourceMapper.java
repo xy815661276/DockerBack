@@ -17,12 +17,12 @@ public interface ResourceMapper {
         DockerResource selectById(int id);
 
         /**
-         * 查询所有博客信息
+         * 查询所有资源信息
          * @return
          */
         List<DockerResource> selectAll();
         /**
-         * 查询所有博客信息
+         * 查询所有资源信息
          * @return
          */
         List<DockerResource> selectByType(int id);
@@ -30,4 +30,14 @@ public interface ResourceMapper {
          * 浏览量加一
          */
         void addViews(int id);
+        /**
+         * 查询中文所有资源信息
+         * @return
+                 */
+        List<DockerResource> selectCnAll();
+        /**
+         * 查询所有中文资源信息
+         * @return
+         */
+        List<DockerResource> selectCnByType(int id);
 }

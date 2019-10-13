@@ -15,10 +15,14 @@
     <select id="selectAll"  resultMap="ProjectMap">
         select * from projects
     </select>
+    <select id="selectCnAll"  resultMap="ProjectMap">
+        select * from projects_cn
+    </select>
     <select id="selectById" resultType="com.hust.docker.entity.DockerProject">
         select * from projects where id = #{id}
     </select>
     <update id="addViews">
-        update projects set views = views+1 where id = #{id}
+        update projects set views = views+1 where id = #{id};
+        update projects_cn set views = views+1 where id = #{id};
     </update>
 </mapper>

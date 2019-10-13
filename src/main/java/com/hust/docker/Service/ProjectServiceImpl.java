@@ -28,4 +28,9 @@ public class ProjectServiceImpl implements ProjectServer{
     public void addViews(int id) throws Exception {
         projectMapper.addViews(id);
     }
+
+    @Override
+    public List<DockerProject> getCnProject() throws Exception {
+        return projectMapper.selectCnAll();
+    }
 }

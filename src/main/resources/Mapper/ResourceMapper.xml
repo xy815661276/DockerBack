@@ -11,10 +11,19 @@
         <result property="type" column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         <result property="author" column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="citednum" column="citednum" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="time" column="time" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ResourceMap">
         select * from resources
+    </select>
+
+    <select id="selectCnAll"  resultMap="ResourceMap">
+        select * from resources_cn
+    </select>
+    <select id="selectCnByType" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources_cn where type = #{type}
     </select>
     <select id="selectById" resultType="com.hust.docker.entity.DockerResource">
         select * from resources where id = #{id}
@@ -23,6 +32,7 @@
         select * from resources where type = #{type}
     </select>
     <update id="addViews">
-        update resources set views = ((select views from resources where id = #{id})+1) where id = #{id}
+        update resources set views = views+1 where id = #{id};
+        update resources_cn set views = views+1 where id = #{id};
     </update>
 </mapper>

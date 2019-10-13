@@ -31,4 +31,14 @@ public class ResourceServiceImpl implements ResourceServer{
     public void addViews(int id) throws Exception {
         resourceMapper.addViews(id);
     }
+
+    @Override
+    public List<DockerResource> getCnResource() throws Exception {
+        return resourceMapper.selectCnAll();
+    }
+
+    @Override
+    public List<DockerResource> getCnResourceByType(int type) throws Exception {
+        return resourceMapper.selectCnByType(type);
+    }
 }
