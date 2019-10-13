@@ -16,20 +16,26 @@
     </resultMap>
 
     <select id="selectAll"  resultMap="ResourceMap">
-        select * from resources
+        select * from resources order by citednum desc
     </select>
 
     <select id="selectCnAll"  resultMap="ResourceMap">
-        select * from resources_cn
+        select * from resources_cn order by citednum desc
     </select>
     <select id="selectCnByType" resultType="com.hust.docker.entity.DockerResource">
-        select * from resources_cn where type = #{type}
+        select * from resources_cn where type = #{type} order by citednum desc
+    </select>
+    <select id="selectCnByTime" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources_cn where time = #{time} order by citednum desc
     </select>
     <select id="selectById" resultType="com.hust.docker.entity.DockerResource">
-        select * from resources where id = #{id}
+        select * from resources where id = #{id} order by citednum desc
     </select>
     <select id="selectByType" resultType="com.hust.docker.entity.DockerResource">
-        select * from resources where type = #{type}
+        select * from resources where type = #{type} order by citednum desc
+    </select>
+    <select id="selectByTime" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources where time = #{time} order by citednum desc
     </select>
     <update id="addViews">
         update resources set views = views+1 where id = #{id};

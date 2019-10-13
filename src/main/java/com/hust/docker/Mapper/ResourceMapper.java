@@ -22,10 +22,15 @@ public interface ResourceMapper {
          */
         List<DockerResource> selectAll();
         /**
-         * 查询所有资源信息
+         * 查询分类资源信息
          * @return
          */
-        List<DockerResource> selectByType(int id);
+        List<DockerResource> selectByType(int type);
+        /**
+         * 查询分类时间资源信息
+         * @return
+         */
+        List<DockerResource> selectByTime(int time);
         /**
          * 浏览量加一
          */
@@ -39,5 +44,10 @@ public interface ResourceMapper {
          * 查询所有中文资源信息
          * @return
          */
-        List<DockerResource> selectCnByType(int id);
+        List<DockerResource> selectCnByType(int type);
+        /**
+         * 查询所有中文资源信息
+         * @return
+         */
+        List<DockerResource> selectCnByTime(int time);
 }

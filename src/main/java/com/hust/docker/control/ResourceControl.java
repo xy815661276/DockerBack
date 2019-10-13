@@ -29,7 +29,7 @@ public class ResourceControl {
      * @return ResponseJSON
      */
     @GetMapping("/getAll")
-    public ResponseJSON getBlog() throws Exception{
+    public ResponseJSON getResources() throws Exception{
         List<DockerResource> list = resourceServer.getResource();
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
@@ -50,9 +50,15 @@ public class ResourceControl {
      * @return ResponseJSON
      */
     @GetMapping("/category/{type}/{index}")
-    public ResponseJSON getBlogById(@PathVariable(value = "type") int type,
+    public ResponseJSON getCategoryById(@PathVariable(value = "type") int type,
                                     @PathVariable(value = "index") int index) throws Exception{
-        List<DockerResource> list = resourceServer.getResourceByType(type);
+
+        List<DockerResource> list;
+        if(type<100)
+            list = resourceServer.getResourceByType(type);
+        else
+            list = resourceServer.getResourceByTime(type);
+
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);
@@ -80,17 +86,17 @@ public class ResourceControl {
      * @return ResponseJSON
      */
     @GetMapping("/category")
-    public ResponseJSON getBlogById() throws Exception{
+    public ResponseJSON getCategoryById() throws Exception{
         List<DockerCategory> list = categoryServer.getCategory();
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
-            responseJSON.setCode(3);
+            responseJSON.setCode(7);
             responseJSON.setMessage("Find Category Success!");
             responseJSON.setBody(list);
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
-            responseJSON.setCode(4);
+            responseJSON.setCode(8);
             responseJSON.setMessage("Failed!");
             responseJSON.setBody(list);
             return responseJSON;
@@ -101,11 +107,11 @@ public class ResourceControl {
      * @return ResponseJSON
      */
     @GetMapping("/page/{index}")
-    public ResponseJSON getBlogById(@PathVariable(value = "index") int index) throws Exception{
+    public ResponseJSON getResourcesByIndex(@PathVariable(value = "index") int index) throws Exception{
         List<DockerResource> list = resourceServer.getResource();
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
-            responseJSON.setCode(3);
+            responseJSON.setCode(9);
             responseJSON.setMessage("Find Page Resources Success!");
             List<DockerResource> page = new ArrayList<>();
             for(int i=0;i<list.size();i++){
@@ -118,7 +124,7 @@ public class ResourceControl {
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
-            responseJSON.setCode(4);
+            responseJSON.setCode(10);
             responseJSON.setMessage("Failed!");
             responseJSON.setBody(list);
             return responseJSON;
@@ -135,7 +141,7 @@ public class ResourceControl {
     public ResponseJSON addViews(@PathVariable(value = "id") int id) throws Exception{
         resourceServer.addViews(id);
         ResponseJSON responseJSON=new ResponseJSON();
-        responseJSON.setCode(5);
+        responseJSON.setCode(11);
         responseJSON.setMessage("Success!");
         return responseJSON;
     }

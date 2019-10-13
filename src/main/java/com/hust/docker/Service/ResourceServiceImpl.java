@@ -41,4 +41,14 @@ public class ResourceServiceImpl implements ResourceServer{
     public List<DockerResource> getCnResourceByType(int type) throws Exception {
         return resourceMapper.selectCnByType(type);
     }
+
+    @Override
+    public List<DockerResource> getCnResourceByTime(int time) throws Exception {
+        return resourceMapper.selectCnByTime(time);
+    }
+
+    @Override
+    public List<DockerResource> getResourceByTime(int time) throws Exception {
+        return resourceMapper.selectByTime(time);
+    }
 }
