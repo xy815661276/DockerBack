@@ -9,9 +9,17 @@ public class DockerResource {
     private String author;
     private int type;
     private int views;
-
+    private String conference;
     private int citednum;
     private int time;
+
+    public String getConference() {
+        return conference;
+    }
+
+    public void setConference(String conference) {
+        this.conference = conference;
+    }
 
     public int getCitednum() {
         return citednum;

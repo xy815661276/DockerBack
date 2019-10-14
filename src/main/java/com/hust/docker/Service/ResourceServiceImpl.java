@@ -61,4 +61,14 @@ public class ResourceServiceImpl implements ResourceServer{
     public List<DockerResource> searchCn(String index) throws Exception {
         return resourceMapper.searchCn(index);
     }
+
+    @Override
+    public List<DockerResource> getCnResourceByConference(String conference) throws Exception {
+        return resourceMapper.selectCnByConference(conference);
+    }
+
+    @Override
+    public List<DockerResource> getResourceByConference(String conference) throws Exception {
+        return resourceMapper.selectByConference(conference);
+    }
 }

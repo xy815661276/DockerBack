@@ -10,11 +10,13 @@ public interface ResourceServer {
     public List<DockerResource> getResource() throws Exception;
     public List<DockerResource> getResourceByType(int type) throws Exception;
     public List<DockerResource> getResourceByTime(int time) throws Exception;
+    public List<DockerResource> getCnResourceByConference(String conference) throws Exception;
     //增加浏览量
     public void addViews(int id) throws Exception;
     public List<DockerResource> getCnResource() throws Exception;
     public List<DockerResource> getCnResourceByType(int type) throws Exception;
     public List<DockerResource> getCnResourceByTime(int time) throws Exception;
+    public List<DockerResource> getResourceByConference(String conference) throws Exception;
     public List<DockerResource> search(String index) throws Exception;
     public List<DockerResource> searchCn(String index) throws Exception;
 

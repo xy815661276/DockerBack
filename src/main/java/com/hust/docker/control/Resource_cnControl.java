@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cn/resources")
+@RequestMapping("/zh-cn/resources")
 public class Resource_cnControl {
     @Autowired
     private ResourceServer resourceServer;
@@ -47,9 +47,20 @@ public class Resource_cnControl {
      * @return ResponseJSON
      */
     @GetMapping("/category/{type}/{index}")
-    public ResponseJSON getBlogById(@PathVariable(value = "type") int type,
-                                    @PathVariable(value = "index") int index) throws Exception{
-        List<DockerResource> list = resourceServer.getCnResourceByType(type);
+    public ResponseJSON getCategoryById(@PathVariable(value = "type") int type,
+                                        @PathVariable(value = "index") int index) throws Exception{
+
+        List<DockerResource> list;
+        if(type<=100)
+            list = resourceServer.getResourceByType(type);
+        else if(type<=200){
+            DockerCategory dockerCategory = categoryServer.getCategoryById(type);
+            list = resourceServer.getCnResourceByTime(Integer.parseInt(dockerCategory.getName()));
+        }
+        else {
+            DockerCategory dockerCategory = categoryServer.getCategoryById(type);
+            list = resourceServer.getCnResourceByConference(dockerCategory.getName());
+        }
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);
@@ -99,7 +110,7 @@ public class Resource_cnControl {
      */
     @GetMapping("/page/{index}")
     public ResponseJSON getResourcesByIndex(@PathVariable(value = "index") int index) throws Exception{
-        List<DockerResource> list = resourceServer.getResource();
+        List<DockerResource> list = resourceServer.getCnResource();
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);

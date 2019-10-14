@@ -32,6 +32,11 @@ public interface ResourceMapper {
          */
         List<DockerResource> selectByTime(int time);
         /**
+         * 查询分类会议资源信息
+         * @return
+         */
+        List<DockerResource> selectByConference(String conference);
+        /**
          * 浏览量加一
          */
         void addViews(int id);
@@ -50,6 +55,11 @@ public interface ResourceMapper {
          * @return
          */
         List<DockerResource> selectCnByTime(int time);
+        /**
+         * 查询分类中文会议资源信息
+         * @return
+         */
+        List<DockerResource> selectCnByConference(String conference);
         /**
          * 模糊搜索
          * @return
