@@ -28,8 +28,8 @@ public class ResourceServiceImpl implements ResourceServer{
         return resourceMapper.selectByType(type);
     }
     @Override
-    public void addViews(int id) throws Exception {
-        resourceMapper.addViews(id);
+    public void addViews(String index) throws Exception {
+        resourceMapper.addViews(index);
     }
 
     @Override

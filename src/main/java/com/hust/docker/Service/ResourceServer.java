@@ -12,7 +12,7 @@ public interface ResourceServer {
     public List<DockerResource> getResourceByTime(int time) throws Exception;
     public List<DockerResource> getCnResourceByConference(String conference) throws Exception;
     //增加浏览量
-    public void addViews(int id) throws Exception;
+    public void addViews(String index) throws Exception;
     public List<DockerResource> getCnResource() throws Exception;
     public List<DockerResource> getCnResourceByType(int type) throws Exception;
     public List<DockerResource> getCnResourceByTime(int time) throws Exception;
