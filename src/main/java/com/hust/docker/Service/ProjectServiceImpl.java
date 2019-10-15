@@ -25,8 +25,8 @@ public class ProjectServiceImpl implements ProjectServer{
     }
 
     @Override
-    public void addViews(int id) throws Exception {
-        projectMapper.addViews(id);
+    public void addViews(String link) throws Exception {
+        projectMapper.addViews(link);
     }
 
     @Override

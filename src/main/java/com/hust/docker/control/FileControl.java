@@ -1,5 +1,7 @@
 package com.hust.docker.control;
 
+import com.hust.docker.Service.ProjectServer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +13,14 @@ import java.io.*;
 
 @Controller
 public class FileControl {
+    @Autowired
+    private ProjectServer projectServer;
 
     @ResponseBody
-    @RequestMapping(value = "/getArticle/{filename}")
-    public void downloadFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws IOException {
-//        InputStream f= this.getClass().getResourceAsStream("/templates/"+filename+".md");
+    @RequestMapping({"/getArticle/{filename}","/zh-cn/getArticle/{filename}"})
+    public void downloadFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws Exception {
+        filename = filename.substring(0,filename.indexOf("_"));
+        projectServer.addViews(filename);
         InputStream f= new  FileInputStream("/root/resources/markdown/"+filename+".md");
         response.reset();
         response.setContentType("application/x-msdownload;charset=utf-8");

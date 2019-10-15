@@ -28,7 +28,7 @@ public interface ProjectMapper {
         /**
          * 浏览量加一
          */
-        void addViews(int id);
+        void addViews(String link);
         /**
          * 模糊搜索
          * @return

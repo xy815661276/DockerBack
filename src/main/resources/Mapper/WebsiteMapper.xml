@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.docker.Mapper.WebsiteMapper">
+
+    <resultMap id="WebsiteMap" type="com.hust.docker.entity.DockerWebsite">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="time" column="time" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="increase" column="increase" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAll"  resultMap="WebsiteMap">
+        select * from website
+    </select>
+    <select id="selectById" resultType="com.hust.docker.entity.DockerWebsite">
+        select * from website where id = #{id}
+    </select>
+    <update id="addViews">
+        update website set views = views+1 where id = 1;
+    </update>
+</mapper>
