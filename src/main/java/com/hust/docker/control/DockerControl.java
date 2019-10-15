@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 @ResponseBody
@@ -20,9 +22,11 @@ public class DockerControl {
     private final static Logger logger = LoggerFactory.getLogger(DockerControl.class);
     @Autowired
     private ResourceServer resourceServer;
-    @RequestMapping("/")
+    @Autowired
+    private HttpServletRequest httpRequest;
+    @RequestMapping("")
     public String index(){
-        logger.info("有人访问网站");
+        logger.info("有人访问网站"+httpRequest.getHeader("X-Real-IP")+httpRequest.getRequestURI());
         return "welcome";
     }
 
@@ -32,10 +36,10 @@ public class DockerControl {
      * @return responseJSON
      * @throws Exception
      */
-    @GetMapping("/pdf/{index}")
+    @RequestMapping("/views/{index}")
     public String addViews(@PathVariable(value = "index") String index) throws Exception{
-        resourceServer.addViews(index);
-        logger.info("有人访问网站的pdf资源,资源为"+index);
+//        resourceServer.addViews(index);
+        logger.info("有人访问网站的pdf资源,资源为"+index+" "+httpRequest.getHeader("X-Real-IP"));
         return "success";
     }
 

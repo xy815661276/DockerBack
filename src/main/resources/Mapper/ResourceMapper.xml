@@ -45,8 +45,8 @@
         select * from resources where conference = #{conference} order by citednum desc
     </select>
     <update id="addViews">
-        update resources set views = views+1 where pdf like "%"#{index}"%";
-        update resources_cn set views = views+1 where pdf like "%"#{index}"%";
+        update resources set views = views+1 where link like "%"#{index}"%";
+        update resources_cn set views = views+1 where link like "%"#{index}"%";
     </update>
     <select id="search" resultType="com.hust.docker.entity.DockerResource">
         select * from resources where title like "%"#{index}"%" or intro like "%"#{index}"%"
