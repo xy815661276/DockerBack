@@ -13,6 +13,7 @@
         <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         <result property="citednum" column="citednum" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         <result property="time" column="time" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="conference" column="conference" javaType="java.lang.String" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectAll"  resultMap="ResourceMap">
@@ -28,6 +29,9 @@
     <select id="selectCnByTime" resultType="com.hust.docker.entity.DockerResource">
         select * from resources_cn where time = #{time} order by citednum desc
     </select>
+    <select id="selectCnByConference" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources_cn where conference = #{conference} order by citednum desc
+    </select>
     <select id="selectById" resultType="com.hust.docker.entity.DockerResource">
         select * from resources where id = #{id} order by citednum desc
     </select>
@@ -36,6 +40,9 @@
     </select>
     <select id="selectByTime" resultType="com.hust.docker.entity.DockerResource">
         select * from resources where time = #{time} order by citednum desc
+    </select>
+    <select id="selectByConference" resultType="com.hust.docker.entity.DockerResource">
+        select * from resources where conference = #{conference} order by citednum desc
     </select>
     <update id="addViews">
         update resources set views = views+1 where id = #{id};

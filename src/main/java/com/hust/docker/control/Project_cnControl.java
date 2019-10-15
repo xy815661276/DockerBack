@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cn/projects")
+@RequestMapping("/zh-cn/projects")
 public class Project_cnControl {
     @Autowired
     private ProjectServer projectServer;

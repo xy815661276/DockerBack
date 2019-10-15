@@ -56,9 +56,13 @@ public class ResourceControl {
         List<DockerResource> list;
         if(type<100)
             list = resourceServer.getResourceByType(type);
-        else{
+        else if(type<=200){
             DockerCategory dockerCategory = categoryServer.getCategoryById(type);
             list = resourceServer.getResourceByTime(Integer.parseInt(dockerCategory.getName()));
+        }
+        else {
+            DockerCategory dockerCategory = categoryServer.getCategoryById(type);
+            list = resourceServer.getResourceByConference(dockerCategory.getName());
         }
 
         if (list != null && list.size() > 0) {
