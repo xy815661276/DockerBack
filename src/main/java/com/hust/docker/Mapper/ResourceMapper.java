@@ -39,7 +39,7 @@ public interface ResourceMapper {
         /**
          * 浏览量加一
          */
-        void addViews(int id);
+        void addViews(String index);
         /**
          * 查询中文所有资源信息
          * @return
