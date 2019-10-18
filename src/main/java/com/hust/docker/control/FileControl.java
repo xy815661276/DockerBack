@@ -19,9 +19,10 @@ public class FileControl {
     @ResponseBody
     @RequestMapping({"/getArticle/{filename}","/zh-cn/getArticle/{filename}"})
     public void downloadFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws Exception {
-        filename = filename.substring(0,filename.indexOf("_"));
-        projectServer.addViews(filename);
         InputStream f= new  FileInputStream("/root/resources/markdown/"+filename+".md");
+        if(filename.contains("_"))
+            filename = filename.substring(0,filename.indexOf("_"));
+        projectServer.addViews(filename);
         response.reset();
         response.setContentType("application/x-msdownload;charset=utf-8");
         try {
