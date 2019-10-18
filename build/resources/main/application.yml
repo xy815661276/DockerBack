@@ -1,5 +1,12 @@
 server:
   port: 8080
+  ssl:
+    key-store: classpath:MyDSKeyStore.jks
+    key-store-password: 123456
+    keyAlias: tomcat
+    protocol: TLS
+    key-password: 123456
+    enabled: true
 spring:
   thymeleaf:
     prefix: classpath:/static/
