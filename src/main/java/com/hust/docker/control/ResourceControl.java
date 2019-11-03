@@ -64,8 +64,10 @@ public class ResourceControl {
             DockerCategory dockerCategory = categoryServer.getCategoryById(type);
             list = resourceServer.getResourceByConference(dockerCategory.getName());
         }
-
-        if (list != null && list.size() > 0) {
+        DockerResource dockerResource = list.get(0);
+        list.remove(0);
+        list.add(dockerResource);
+        if (list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);
             responseJSON.setMessage("Find Resources Success!");
@@ -115,7 +117,10 @@ public class ResourceControl {
     @GetMapping("/page/{index}")
     public ResponseJSON getResourcesByIndex(@PathVariable(value = "index") int index) throws Exception{
         List<DockerResource> list = resourceServer.getResource();
-        if (list != null && list.size() > 0) {
+        DockerResource dockerResource = list.get(0);
+        list.remove(0);
+        list.add(dockerResource);
+        if (list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(9);
             responseJSON.setMessage("Find Page Resources Success!");

@@ -61,6 +61,9 @@ public class Resource_cnControl {
             DockerCategory dockerCategory = categoryServer.getCategoryById(type);
             list = resourceServer.getCnResourceByConference(dockerCategory.getName());
         }
+        DockerResource dockerResource = list.get(0);
+        list.remove(0);
+        list.add(dockerResource);
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);
@@ -111,6 +114,9 @@ public class Resource_cnControl {
     @GetMapping("/page/{index}")
     public ResponseJSON getResourcesByIndex(@PathVariable(value = "index") int index) throws Exception{
         List<DockerResource> list = resourceServer.getCnResource();
+        DockerResource dockerResource = list.get(0);
+        list.remove(0);
+        list.add(dockerResource);
         if (list != null && list.size() > 0) {
             ResponseJSON responseJSON=new ResponseJSON();
             responseJSON.setCode(3);

@@ -70,18 +70,4 @@ public class ProjectControl {
         }
     }
 
-    /**
-     * 浏览量加一
-     * @param id
-     * @return responseJSON
-     * @throws Exception
-     */
-    @GetMapping("/addViews/{id}")
-    public ResponseJSON addViews(@PathVariable(value = "id") int id) throws Exception{
-        projectServer.addViews(id);
-        ResponseJSON responseJSON=new ResponseJSON();
-        responseJSON.setCode(5);
-        responseJSON.setMessage("Success!");
-        return responseJSON;
-    }
 }
