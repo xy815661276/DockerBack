@@ -72,7 +72,7 @@ public class Resource_cnControl {
                 }
             }
             responseJSON.setBody(page);
-            responseJSON.setData((int)Math.ceil(((double)list.size())/5));
+            responseJSON.setPages((int)Math.ceil(((double)list.size())/5));
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();
@@ -122,7 +122,7 @@ public class Resource_cnControl {
                 }
             }
             responseJSON.setBody(page);
-            responseJSON.setData((int)Math.ceil(((double)list.size())/5));
+            responseJSON.setPages((int)Math.ceil(((double)list.size())/5));
             return responseJSON;
         } else {
             ResponseJSON responseJSON=new ResponseJSON();

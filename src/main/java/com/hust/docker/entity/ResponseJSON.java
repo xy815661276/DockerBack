@@ -4,14 +4,14 @@ public class ResponseJSON {
     private int code;
     private Object body;
     private String message;
-    private int data;
+    private int pages;
 
-    public int getData() {
-        return data;
+    public int getPages() {
+        return pages;
     }
 
-    public void setData(int data) {
-        this.data = data;
+    public void setPages(int pages) {
+        this.pages = pages;
     }
 
     public int getCode() {
