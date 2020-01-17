@@ -43,7 +43,8 @@ public class BlogControl {
             responseJSON.setBody(list);
             return responseJSON;
         }
-    }/**
+    }
+    /**
      * 按页查找BLOG
      * @return ResponseJSON
      */

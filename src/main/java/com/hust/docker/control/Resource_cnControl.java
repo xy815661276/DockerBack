@@ -52,7 +52,7 @@ public class Resource_cnControl {
 
         List<DockerResource> list;
         if(type<=100)
-            list = resourceServer.getResourceByType(type);
+            list = resourceServer.getCnResourceByType(type);
         else if(type<=200){
             DockerCategory dockerCategory = categoryServer.getCategoryById(type);
             list = resourceServer.getCnResourceByTime(Integer.parseInt(dockerCategory.getName()));

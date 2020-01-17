@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
@@ -17,11 +18,18 @@ public class FileControl {
     private ProjectServer projectServer;
 
     @ResponseBody
-    @RequestMapping({"/getArticle/{filename}","/zh-cn/getArticle/{filename}"})
+    @RequestMapping("/getArticle/{filename}")
     public void downloadFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws Exception {
-        InputStream f= new  FileInputStream("/root/resources/markdown/"+filename+".md");
-        if(filename.contains("_"))
-            filename = filename.substring(0,filename.indexOf("_"));
+        getFile(filename, response);
+    }
+    @ResponseBody
+    @RequestMapping("/zh-cn/getArticle/{filename}")
+    public void downloadCnFile(@PathVariable(value = "filename")String filename, HttpServletResponse response) throws Exception {
+        filename = filename+"_CH";
+        getFile(filename, response);
+    }
+    private void getFile(String filename, HttpServletResponse response) throws Exception {
+        InputStream f= new FileInputStream("/root/resources/markdown/"+filename+".md");
         projectServer.addViews(filename);
         response.reset();
         response.setContentType("application/x-msdownload;charset=utf-8");
