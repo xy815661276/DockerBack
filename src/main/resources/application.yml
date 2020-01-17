@@ -3,7 +3,7 @@ server:
   ssl:
     key-store: classpath:MyDSKeyStore.jks
     key-store-password: 123456
-    keyAlias: tomcat
+    keyAlias: tomcat_letsencrypt #如果改什么端口都报错，那么就是这个值灭有设置好，需要和生成证书的一样
     protocol: TLS
     key-password: 123456
     enabled: true
