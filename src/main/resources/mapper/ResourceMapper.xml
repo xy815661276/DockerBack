@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hust.docker.mapper.ResourceMapper">
+
+    <resultMap id="ResourceMap" type="com.hust.docker.entity.Resource">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="introduction" column="introduction" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        <result property="conference" column="conference" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="conferenceName" column="conferenceName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="year" column="year" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="yearName" column="yearName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="tag" column="tag" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="tagName" column="tagName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="citations" column="citations" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="thumbnail" column="thumbnail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="pdf" column="pdf" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="ResourceMap">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+    </select>
+    <select id="selectById" resultType="com.hust.docker.entity.Resource">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        where id = #{id}
+    </select>
+    <select id="selectByTag" resultType="com.hust.docker.entity.Resource">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        where tag = #{tag}
+    </select>
+    <select id="selectByYear" resultType="com.hust.docker.entity.Resource">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        where year = #{year}
+    </select>
+    <select id="selectByConference" resultType="com.hust.docker.entity.Resource">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        where conference = #{conference}
+    </select>
+    <select id="selectGroupByConference" resultType="java.util.Map">
+        select conference, conferenceName, count(conference) as count from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        group by conference
+    </select>
+    <select id="selectGroupByTag" resultType="java.util.Map">
+        select tag, tagName, count(tag) as count from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        group by tag
+    </select>
+    <select id="selectGroupByYear" resultType="java.util.Map">
+        select year, yearName, count(year) as count from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        group by year
+    </select>
+    <select id="search" resultType="com.hust.docker.entity.Resource">
+        select * from
+        <if test='lang=="en"'>resources</if>
+        <if test='lang=="zh-CN"'>`resources_zh-cn`</if>
+        where title like concat('%', #{query}, '%') or introduction like concat('%', #{query}, '%')
+    </select>
+    <update id="addViews">
+        update resources set views = views + 1 where id = #{id};
+        update `resources_zh-cn` set views = views + 1 where id = #{id};
+    </update>
+</mapper>

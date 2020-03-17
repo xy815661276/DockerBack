@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hust.docker.mapper.VisitorMapper">
+
+    <select id="getPv" resultType="java.lang.Integer">
+        select pv from visitor;
+    </select>
+
+    <select id="getUv" resultType="java.lang.Integer">
+        select uv from visitor;
+    </select>
+
+    <select id="getIp" resultType="java.lang.Integer">
+        select ip from visitor;
+    </select>
+
+    <update id="addPv">
+        update visitor set pv = pv + 1;
+    </update>
+
+    <update id="addUv">
+        update visitor set uv = uv + 1;
+    </update>
+
+    <update id="addIp">
+        update visitor set ip = ip + 1;
+    </update>
+
+</mapper>

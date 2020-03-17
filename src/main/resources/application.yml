@@ -1,29 +1,9 @@
+spring:
+  profiles:
+    #active: dev
+    active: pro
 server:
   port: 8080
-  ssl:
-    key-store: classpath:MyDSKeyStore.jks
-    key-store-password: 123456
-    keyAlias: tomcat_letsencrypt #如果改什么端口都报错，那么就是这个值灭有设置好，需要和生成证书的一样
-    protocol: TLS
-    key-password: 123456
-    enabled: true
-spring:
-  thymeleaf:
-    prefix: classpath:/static/
-    cache: false
-#    mode: HTML5
-#    check-template: true
-#    servlet.content-type: text/html
-#    encoding: UTF-8
-#    suffix: .html
-  # 修改默认的静态寻址资源目录
-  resources:
-    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
-  datasource:
-    username: website
-    password: 123456
-    url: jdbc:mysql://47.240.43.166:3306/docker?characterEncoding=utf-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowMultiQueries=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
-  mapper-locations: classpath:/Mapper/*.xml
   type-aliases-package: com.hust.docker.entity
+  mapper-locations: classpath:/mapper/*.xml

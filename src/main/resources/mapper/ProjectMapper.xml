@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hust.docker.mapper.ProjectMapper">
+
+    <resultMap id="ProjectMap" type="com.hust.docker.entity.Project">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="excerpt" column="excerpt" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        <result property="content" column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        <result property="authors" column="authors" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="conference" column="conference" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="year" column="year" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="thumbnail" column="thumbnail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="slug" column="slug" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="pdf" column="pdf" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectById" resultType="com.hust.docker.entity.Project">
+        select * from
+        <if test='lang=="en"'>projects</if>
+        <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
+        where id = #{id}
+    </select>
+    <select id="selectBySlug" resultType="com.hust.docker.entity.Project">
+        select * from
+        <if test='lang=="en"'>projects</if>
+        <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
+        where slug = #{slug}
+    </select>
+    <select id="selectAllBrief" resultMap="ProjectMap">
+        select id, title, excerpt, conference, year, thumbnail, slug from
+        <if test='lang=="en"'>projects</if>
+        <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
+    </select>
+    <select id="selectAll" resultMap="ProjectMap">
+        select * from
+        <if test='lang=="en"'>projects</if>
+        <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
+    </select>
+    <select id="search" resultType="com.hust.docker.entity.Project">
+        select id, title, slug from
+        <if test='lang=="en"'>projects</if>
+        <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
+        where title like concat('%', #{query}, '%') or excerpt like concat('%', #{query}, '%') or content like
+        concat('%', #{query}, '%')
+    </select>
+    <update id="addViews">
+        update projects set views = views + 1 where id = #{id};
+        update `projects_zh-cn` set views = views + 1 where id = #{id};
+    </update>
+</mapper>
