@@ -16,6 +16,7 @@
         <result property="thumbnail" column="thumbnail" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="slug" column="slug" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="pdf" column="pdf" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="code" column="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="views" column="views" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </resultMap>
 
@@ -32,7 +33,7 @@
         where slug = #{slug}
     </select>
     <select id="selectAllBrief" resultMap="ProjectMap">
-        select id, title, excerpt, conference, year, thumbnail, slug from
+        select id, title, excerpt, conference, year, thumbnail, slug, code from
         <if test='lang=="en"'>projects</if>
         <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
     </select>
@@ -45,8 +46,8 @@
         select id, title, slug from
         <if test='lang=="en"'>projects</if>
         <if test='lang=="zh-CN"'>`projects_zh-cn`</if>
-        where title like concat('%', #{query}, '%') or excerpt like concat('%', #{query}, '%') or content like
-        concat('%', #{query}, '%')
+        where title like concat('%', #{query}, '%') or authors like concat('%', #{query}, '%') or
+          excerpt like concat('%', #{query}, '%') or content like concat('%', #{query}, '%')
     </select>
     <update id="addViews">
         update projects set views = views + 1 where id = #{id};

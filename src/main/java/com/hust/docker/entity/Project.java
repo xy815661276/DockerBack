@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.StringReader;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,6 +31,8 @@ public class Project implements Comparable<Project> {
     private String slug;
 
     private String pdf;
+
+    private String code;
 
     private Integer views;
 

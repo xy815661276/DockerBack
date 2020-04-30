@@ -37,6 +37,7 @@ public class VisitorController {
      */
     @GetMapping("/views")
     public ResponseJson<Map<String, Object>> getPv() throws Exception {
+        visitorService.addPv();
         ResponseJson<Map<String, Object>> responseJson = new ResponseJson<>();
         Map<String, Object> data = new HashMap<>(1);
         data.put("pv", visitorService.getPv());
